@@ -15,7 +15,6 @@ aux_source_directory(include DIR_INCLUDES)
 add_executable(Bookstore2024
         ${DIR_SRCS}
         ${DIR_INCLUDES}
-        main.cpp
 )
 
 # Include directories

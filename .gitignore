@@ -1,2 +1,3 @@
 requirements.md
 cmake-build-debug
+.clang-format
