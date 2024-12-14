@@ -8,17 +8,17 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Collect file
-aux_source_directory(src DIR_SRCS)
-aux_source_directory(include DIR_INCLUDES)
 
 # Add the executable
 add_executable(Bookstore2024
-        ${DIR_SRCS}
-        ${DIR_INCLUDES}
+        main.cpp
+        include/Directory.hpp
+        include/MemoryRiver.hpp
+        src/MemoryRiver.cpp
+        src/Directory.cpp
+        src/Unit.cpp
+        include/Unit.hpp
 )
-
-# Include directories
-include_directories(include)
 
 # Link libraries
 # target_link_libraries(Bookstore2024 <library_name>)
