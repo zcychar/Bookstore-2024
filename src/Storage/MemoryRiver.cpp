@@ -1,4 +1,4 @@
-#include "../include/MemoryRiver.hpp"
+#include "../../include/Storage/MemoryRiver.hpp"
 
 template <class T, int info_len>
 void MemoryRiver<T, info_len>::initialise(string FN) {

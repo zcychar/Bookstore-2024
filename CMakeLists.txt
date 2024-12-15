@@ -13,11 +13,22 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 add_executable(Bookstore2024
         main.cpp
         include/Directory.hpp
-        include/MemoryRiver.hpp
-        src/MemoryRiver.cpp
+        include/Storage/MemoryRiver.hpp
+        src/Storage/MemoryRiver.cpp
         src/Directory.cpp
-        src/Unit.cpp
-        include/Unit.hpp
+        src/Storage/Unit.cpp
+        include/Storage/Unit.hpp
+        include/Log.hpp
+        src/Log.cpp
+        include/Log.hpp
+        src/User.cpp
+        include/User.hpp
+        src/Book.cpp
+        include/Book.hpp
+        include/Book.hpp
+        src/User.cpp
+        src/Utils.cpp
+        include/Utils.hpp
 )
 
 # Link libraries

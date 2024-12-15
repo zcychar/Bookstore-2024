@@ -166,25 +166,20 @@ void Directory<T>::insert(Unit<T> id) {
 }
 
 template <typename T>
-void Directory<T>::find(Unit<T> id) {
+vector<T> Directory<T>::find(Unit<T> id) {
   load_dir();
   int st = 0, ed = 0;
-  bool flag = false;
   index_find(st, ed, id);
+  vector<T> ans = {};
   for (int i = st; i != ed; i = load_[i].next) {
     load_cur(i);
     auto it = std::lower_bound(cur_.begin() + 1, cur_.begin() + load_[i].size + 1, id);
     while (it != cur_.end() && strcmp(it->index, id.index) == 0) {
-      flag = true;
-      std::cout << it->value << " ";
+      ans.emplace_back(it);
       ++it;
     }
   }
-  if (!flag) {
-    std::cout << "null\n";
-  } else {
-    std::cout << "\n";
-  }
+  return ans;
 }
 
 template <typename T>
@@ -215,12 +210,24 @@ void Directory<T>::del(Unit<T> id) {
       cur_.erase(it);
       load_[i].size--;
       dir_.update(load_[1], 3 * sizeof(int), tail);
-      body_.update(cur_[1],load_[i].pos,load_[i].size);
+      body_.update(cur_[1], load_[i].pos, load_[i].size);
       return;
     }
   }
 }
 
-
-
-
+template <typename T>
+void Directory<T>::print_all() {
+  int head = 0, tail = 0;
+  dir_.get_info(tail, 3);
+  dir_.get_info(head, 2);
+  load_.resize(tail + 1);
+  dir_.read(load_[1], 3 * sizeof(int), tail);
+  for (int i = head; i; i = load_[i].next) {
+    cur_.resize(load_[i].size + 1);
+    body_.read(cur_[1], load_[i].pos, load_[i].size);
+    for (int j = 1; j <= load_[i].size; ++j) {
+      std::cout << cur_[j].value << "\n";
+    }
+  }
+}
