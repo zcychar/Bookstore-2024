@@ -56,8 +56,11 @@ class User {
   vector<string>select_={};
   int level_ = 0;
 
+
 public:
   User();
+
+ void deep_select(string ISBN,string ISBN_old);
 
   int getP();
 

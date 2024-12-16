@@ -9,6 +9,14 @@ int User::getP() {
   return level_;
 }
 
+void User::deep_select(string ISBN,string ISBN_old) {
+  for(int i=0;i<select_.size();++i) {
+    if(select_[i]==ISBN_old) {
+      select_[i]=ISBN;
+    }
+  }
+}
+
 void User::select(const string ISBN) {
   if(select_.empty()) {
     throw std::exception();

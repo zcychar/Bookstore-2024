@@ -20,7 +20,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       if (!isValidString(processed[1], 30)) {
         throw std::exception();
       }
-      user.login(processed[0]);
+      user.login(processed[1]);
     } else if (processed.size() == 3) {
       if (!isValidString(processed[1], 30) || !isValidString(processed[2], 30)) {
         throw std::exception();
@@ -99,7 +99,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     }
     auto price = book.buy(processed[1], stringtoInt(processed[2]));
     double spend=stringtoInt(processed[2])*1.0 * price;
-    if(spend==0) {
+    if(stringtoInt(processed[2])==0) {
       throw std::exception();
     }
     std::cout<<std::setprecision(2)<<std::fixed<<spend<<'\n';
@@ -115,9 +115,16 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       throw std::exception();
     }
     auto tmp = refreshInfo(processed);
-    book.modify(tmp, user.getB());
+    if(tmp.keyword[0]!=0) {
+      parser(string(tmp.keyword));
+    }
+    auto old=user.getB();
+    if(old.empty()) {
+      throw std::exception();
+    }
+    book.modify(tmp, old);
     if(tmp.ISBN[0]!=0) {
-      user.select(tmp.ISBN);
+      user.deep_select(string(tmp.ISBN),old);
     }
   } else if (opt == "import") {
     if (processed.size() != 3 || current_level < 3) {
@@ -146,7 +153,7 @@ int main() {
       std::string input;
       getline(std::cin, input);
       if (input.empty())
-        continue;
+        exit(0);
       processLine(input, user, log, book);
       // std::cout<<user.getP();
     } catch (std::exception &ex) {
