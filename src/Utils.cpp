@@ -71,6 +71,11 @@ std::pair<int, string> getInfo(const std::string &str) {
       }
       string tmp = str.substr(7);
       tmp.pop_back();
+      for(auto i:tmp) {
+        if(i=='"') {
+          throw std::exception();
+        }
+      }
       if(tmp.size()>60) {
         throw std::exception();
       }
@@ -82,6 +87,11 @@ std::pair<int, string> getInfo(const std::string &str) {
       }
       string tmp = str.substr(9);
       tmp.pop_back();
+      for(auto i:tmp) {
+        if(i=='"') {
+          throw std::exception();
+        }
+      }
       if(tmp.size()>60) {
         throw std::exception();
       }
@@ -93,6 +103,11 @@ std::pair<int, string> getInfo(const std::string &str) {
       }
       string tmp = str.substr(10);
       tmp.pop_back();
+      for(auto i:tmp) {
+        if(i=='"') {
+          throw std::exception();
+        }
+      }
       if(tmp.size()>60) {
         throw std::exception();
       }
