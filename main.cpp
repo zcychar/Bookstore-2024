@@ -74,6 +74,9 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     user.del(processed[1]);
   } else if (opt == "show") {
     if (processed[1] == "finance") {
+      if(current_level<7) {
+        throw std::exception();
+      }
       if(processed.size()==2) {
         log.show(-1);
       }else if(processed.size()==3) {
