@@ -139,7 +139,9 @@ void Book::show(int type, string requirement) {
       if (tmp.empty()) {
         std::cout << "\n";
       } else {
-        std::cout << tmp.front()<<'\n';
+        for (const auto &it : tmp) {
+          std::cout << it<<'\n';
+        }
       }
       break;
     }

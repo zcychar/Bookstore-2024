@@ -13,6 +13,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
   string opt = processed[0];
   int current_level = user.getP();
   if (opt == "quit" || opt == "exit") {
+    log.exit();
     exit(0);
   }
   if (opt == "su") {
@@ -155,8 +156,10 @@ int main() {
     try {
       std::string input;
       getline(std::cin, input);
-      if (input.empty())
+      if (input.empty()) {
+        log.exit();
         exit(0);
+      }
       processLine(input, user, log, book);
       // std::cout<<user.getP();
     } catch (std::exception &ex) {
