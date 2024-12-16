@@ -5,7 +5,9 @@
 #ifndef BOOK_HPP
 #define BOOK_HPP
 #include <cstring>
+#include <iomanip>
 
+#include "Storage/Unit.hpp"
 #include "Directory.hpp"
 
 
@@ -18,7 +20,7 @@ struct Book_info {
   double price = 0;
 
   bool operator<(const Book_info &other) const {
-    return (strcmp(ISBN, other.ISBN) == -1);
+    return strcmp(ISBN, other.ISBN) < 0;
   }
 
   bool operator==(const Book_info &other) const {
@@ -31,8 +33,9 @@ struct Book_info {
   }
 
   friend std::ostream &operator<<(std::ostream &os, const Book_info &that) {
-    os << that.ISBN << '\t' << that.bookname << '\t' << that.author << '\t' << that.keyword << '\t' << that.price <<
-        '\t' << that.quantity << '\n';
+    os << that.ISBN << '\t' << that.bookname << '\t' << that.author << '\t' << that.keyword << '\t' <<
+        std::setprecision(2) <<std::fixed<< that.price <<
+        '\t' << that.quantity;
     return os;
   }
 };
@@ -52,7 +55,8 @@ class Book {
 public:
   Book() = default;
 
-  void show(string requirement = "", int type);
+  //type:0-all,1-ISBN,2-name,3-author,4-keyword
+  void show(int type, string requirement = "");
 
   double buy(string ISBN, int quantity);
 

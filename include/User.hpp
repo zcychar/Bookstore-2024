@@ -21,6 +21,16 @@ struct User_info {
 
   User_info() = default;
 
+  User_info(const User_info& other) {
+    memset(user_id, 0, sizeof(user_id));
+    memset(user_name, 0, sizeof(user_name));
+    memset(password, 0, sizeof(password));
+    strcpy(user_id, other.user_id);
+    strcpy(user_name, other.user_name);
+    strcpy(password, other.password);
+    privilege = other.privilege;
+  }
+
   User_info(const char *userid, const char *passwrd, const char *username, const int pri = 1) {
     memset(user_id, 0, sizeof(user_id));
     memset(user_name, 0, sizeof(user_name));
@@ -41,7 +51,7 @@ struct User_info {
 };
 
 class User {
-  Directory<User_info> storage_ = Directory<User_info>("user_storage");
+  Directory<User_info> storage_ =Directory<User_info>("user_storage");
   vector<User_info> login_ = {};
   vector<string>select_={};
   int level_ = 0;
@@ -59,9 +69,9 @@ public:
 
   void regist(string userid, string password, string username);
 
-  void passwd(string userid, string currentpassword = {}, string newpassword);
+  void passwd(string userid, string newpassword, string currentpassword="");
 
-  void useradd(string userid, string password, int privilege, string username);
+  void useradd(string userid, string password, int privilege, string username,int initial=0);
 
   void del(string userid);
 

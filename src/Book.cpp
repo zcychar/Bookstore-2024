@@ -5,19 +5,20 @@
 #include "../include/Book.hpp"
 #include "../include/User.hpp"
 #include "../include/Utils.hpp"
+#include "../include/Storage/Unit.hpp"
 #include <iostream>
-
+BOOK_HPP
 #include "../../../../usr/include/complex.h"
 
 void Book::full_del(Book_info &target) {
   ISBN_storage_.del(Unit<Book_info>(target.ISBN, target));
-  if (target.bookname[0] != '') {
+  if (target.bookname[0] != 0) {
     name_storage_.del(Unit<Book_info>(target.bookname, target));
   }
-  if (target.author[0] != '') {
+  if (target.author[0] != 0) {
     author_storage_.del(Unit<Book_info>(target.author, target));
   }
-  if (target.keyword[0] != '') {
+  if (target.keyword[0] != 0) {
     auto words = parser(string(target.keyword));
     for (const auto &it : words) {
       keyword_storage_.del(Unit<Book_info>(it.c_str(), target));
@@ -26,36 +27,37 @@ void Book::full_del(Book_info &target) {
 }
 
 void Book::copy(Book_info &target, Book_info &newinfo) {
-  if (newinfo.ISBN[0] != '') {
+  if (newinfo.ISBN[0] != 0) {
     memset(target.ISBN, 0, sizeof(target.ISBN));
     strcpy(target.ISBN, newinfo.ISBN);
   }
-  if (newinfo.author[0] != '') {
+  if (newinfo.author[0] != 0) {
     memset(target.author, 0, sizeof(target.author));
     strcpy(target.author, newinfo.author);
   }
-  if (newinfo.keyword[0] != '') {
+  if (newinfo.keyword[0] != 0) {
     memset(target.keyword, 0, sizeof(target.keyword));
     strcpy(target.keyword, newinfo.keyword);
   }
-  if (newinfo.bookname[0] != '') {
+  if (newinfo.bookname[0] != 0) {
     memset(target.bookname, 0, sizeof(target.bookname));
     strcpy(target.bookname, newinfo.bookname);
   }
-  if(newinfo.price!=0) {
-    target.price=newinfo.price;
+  if (newinfo.price != 0) {
+    target.price = newinfo.price;
   }
 }
 
 void Book::full_insert(Book_info &target) {
+
   ISBN_storage_.insert(Unit<Book_info>(target.ISBN, target));
-  if (target.bookname[0] != '') {
+  if (target.bookname[0] != 0) {
     name_storage_.insert(Unit<Book_info>(target.bookname, target));
   }
-  if (target.author[0] != '') {
+  if (target.author[0] != 0) {
     author_storage_.insert(Unit<Book_info>(target.author, target));
   }
-  if (target.keyword[0] != '') {
+  if (target.keyword[0] != 0) {
     auto words = parser(string(target.keyword));
     for (const auto &it : words) {
       keyword_storage_.insert(Unit<Book_info>(it.c_str(), target));
@@ -66,7 +68,10 @@ void Book::full_insert(Book_info &target) {
 void Book::create(string ISBN) {
   auto tmp = ISBN_storage_.find(Unit<Book_info>(ISBN.c_str()));
   if (tmp.empty()) {
-    ISBN_storage_.insert(Unit<Book_info>(ISBN.c_str()));
+    Book_info val;
+    memset(val.ISBN,0,sizeof(val.ISBN));
+    strcpy(val.ISBN,ISBN.c_str());
+    ISBN_storage_.insert(Unit<Book_info>(ISBN.c_str(),val));
   }
 }
 
@@ -103,13 +108,19 @@ void Book::modify(Book_info newinfo, string ISBN) {
   if (tmp.empty()) {
     throw std::exception();
   }
+  if(newinfo.ISBN[0]!=0) {
+    auto safetycheck = ISBN_storage_.find(Unit<Book_info>(newinfo.ISBN));
+    if (!safetycheck.empty()) {
+      throw std::exception();
+    }
+  }
   auto target = tmp.front();
   full_del(target);
-  copy(target,newinfo);
+  copy(target, newinfo);
   full_insert(target);
 }
 
-void Book::show(string requirement, int type) {
+void Book::show(int type, string requirement) {
   switch (type) {
     case 0: {
       ISBN_storage_.print_all();
@@ -120,7 +131,7 @@ void Book::show(string requirement, int type) {
       if (tmp.empty()) {
         std::cout << "\n";
       } else {
-        std::cout << tmp.front();
+        std::cout << tmp.front()<<'\n';
       }
       break;
     }
@@ -129,7 +140,7 @@ void Book::show(string requirement, int type) {
       if (tmp.empty()) {
         std::cout << "\n";
       } else {
-        std::cout << tmp.front();
+        std::cout << tmp.front()<<'\n';
       }
       break;
     }
@@ -139,7 +150,7 @@ void Book::show(string requirement, int type) {
         std::cout << "\n";
       } else {
         for (const auto &it : tmp) {
-          std::cout << it << '\n';
+          std::cout << it<<'\n';
         }
       }
       break;
@@ -154,7 +165,7 @@ void Book::show(string requirement, int type) {
         std::cout << "\n";
       } else {
         for (const auto &it : tmp) {
-          std::cout << it << '\n';
+          std::cout << it <<'\n';
         }
       }
       break;

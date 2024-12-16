@@ -2,7 +2,8 @@
 
 #include <algorithm>
 
-User::User() { useradd("root", "sjtu", 7, "root"); }
+User::User() {
+}
 
 int User::getP() {
   return level_;
@@ -54,8 +55,8 @@ void User::regist(string userid, string password, string username) {
     User_info(userid.c_str(), password.c_str(), username.c_str())));
 }
 
-void User::useradd(string userid, string password, int privilege, string username) {
-  if(privilege>level_) {
+void User::useradd(string userid, string password, int privilege, string username,int initial) {
+  if(privilege>=level_&&!initial) {
     throw std::exception();
   }
   auto tmp = storage_.find(Unit<User_info>(userid.c_str()));
@@ -79,7 +80,7 @@ void User::del(string userid) {
   storage_.del(Unit<User_info>(target.user_id,target));
 }
 
-void User::passwd(string userid, string currentpassword, string newpassword) {
+void User::passwd(string userid, string newpassword, string currentpassword) {
   auto tmp = storage_.find(Unit<User_info>(userid.c_str()));
   if (tmp.empty()) {
     throw std::exception();

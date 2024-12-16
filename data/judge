@@ -1,0 +1,123 @@
+#!/usr/bin/env python3
+
+from os import chdir
+from pathlib import PosixPath
+from shutil import copy, rmtree, which
+from subprocess import DEVNULL, TimeoutExpired, run
+from sys import argv
+from typing import List, Tuple
+
+timeout_secs = 30
+
+testpoints = {
+  'basic': [ [ i ] for i in range(1, 7) ] +
+           [ [ f'7/{i}' for i in (1, 2, 3) ], [ f'8/{i}' for i in range(1, 101) ] ],
+  'advanced': [ [ f'{i}/{j}' for j in range(1, 11 if i != 3 else 6) ] for i in range(1, 6) ],
+  'complex': [ [ f'{i}/{j}' for j in range(1, 11) ] for i in range(1, 6) ],
+  'robust': [ [ i ] for i in range(1, 6) ],
+}
+
+datadir = PosixPath(__file__).parent.resolve()
+pwd = PosixPath.cwd()
+wd = datadir / 'testdir'
+exe = 'code'
+diff = which('diff')
+
+def init ():
+    if not (pwd / exe).exists():
+        print('Please ensure ./code exists')
+        exit(2)
+    rmtree(wd, ignore_errors=True)
+    wd.mkdir()
+    copy(pwd / exe, wd / exe)
+    chdir(wd)
+
+def cleanup ():
+    chdir(pwd)
+    rmtree(wd)
+
+def run_testcase (datafiles: List[Tuple[str, PosixPath]], quiet: bool):
+    init()
+    for i, (name, testpoint) in enumerate(datafiles):
+        def unaccepted (message: str):
+            if quiet:
+                print(f'Testpoint {name}: ', end='')
+            print(message)
+            print(f'Test files available at {wd}')
+            exit(1)
+
+        if not quiet:
+            print(f'Running {name}... ', end='')
+        outfile_name = f'{i + 1}.out'
+        with open(str(testpoint) + '.in') as infile, open(outfile_name, 'w') as outfile:
+            try:
+                if run([ wd / exe ], stdin=infile, stdout=outfile, timeout=timeout_secs).returncode != 0:
+                    unaccepted('Runtime Error')
+            except TimeoutExpired:
+                unaccepted('Time Limit Exceeded')
+            if run([ diff, '-qZB', outfile_name, str(testpoint) + '.ans' ], stdout=DEVNULL, stderr=DEVNULL).returncode == 0:
+                if not quiet:
+                    print('Accepted!')
+            else:
+                unaccepted('Wrong Answer')
+    cleanup()
+
+def run_testcase_wrapper (group_name: str, index: int):
+    tests = testpoints[group_name][index - 1]
+    datafiles = [
+        (
+            f'{group_name} testcase {index}, testpoint {j + 1}',
+            datadir / group_name / f'testcase{filename}',
+        ) for j, filename in enumerate(tests)
+    ]
+    quiet = group_name != 'complex'
+    if not quiet:
+        print(f'Testcase {group_name} {index}:')
+    run_testcase(datafiles, quiet)
+    print(f'Testcase {group_name} {index} accepted.')
+    if not quiet:
+        print('')
+
+def run_group (group_name: str):
+    print(f'Running {group_name} tests...')
+    testcases = testpoints[group_name]
+    for i in range(len(testcases)):
+        run_testcase_wrapper(group_name, i + 1)
+    print('')
+
+def usage ():
+    argv0 = argv[0]
+    print(f'''Usage:
+  run all testpoints: {argv0}
+  run testcase group: {argv0} <group>
+  run testcase:       {argv0} <group> <index>
+
+Examples:
+  {argv0}
+  {argv0} basic
+  {argv0} basic 1
+''')
+    exit(2)
+
+def main ():
+    if len(argv) == 1: # ./judge
+        for group in testpoints:
+            run_group(group)
+    elif len(argv) == 2: # ./judge <group>
+        group = argv[1]
+        if group not in testpoints:
+            print(f'Testcase group {group} not found.')
+            usage()
+        run_group(group)
+    elif len(argv) == 3: # ./judge <group> <index>
+        group = argv[1]
+        index = int(argv[2])
+        if group not in testpoints or index <= 0 or index > len(testpoints[group]):
+            print(f'Testcase {group} {index} not found.')
+            usage()
+        run_testcase_wrapper(group, index)
+    else:
+        usage()
+
+if __name__ == '__main__':
+    main()
