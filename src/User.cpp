@@ -30,6 +30,9 @@ void User::login(string userid, string password) {
     throw std::exception();
   }
   auto target = tmp.front();
+  if(!password.empty()&&strcmp(password.c_str(), target.password)!=0) {
+    throw std::exception();
+  }
   if (level_ > target.privilege) {
     login_.push_back(target);
     select_.emplace_back("");
