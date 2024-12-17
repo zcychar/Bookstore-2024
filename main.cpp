@@ -19,28 +19,27 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     log.exit();
     exit(0);
   }
-  int a=0;
-  int b=10/a;
-  // if (opt == "su") {
-  //   if (processed.size() == 2) {
-  //     if (!isValidString(processed[1], 30)) {
-  //       throw std::exception();
-  //     }
-  //     user.login(processed[1]);
-  //   } else if (processed.size() == 3) {
-  //     if (!isValidString(processed[1], 30) || !isValidString(processed[2], 30)) {
-  //       throw std::exception();
-  //     }
-  //     user.login(processed[1], processed[2]);
-  //   } else {
-  //     throw std::exception();
-  //   }
-  // } else if (opt == "logout") {
-  //   if (current_level < 1 || processed.size() > 1) {
-  //     throw std::exception();
-  //   }
-  //   user.logout();
-  // } else if (opt == "register") {
+  if (opt == "su") {
+    if (processed.size() == 2) {
+      if (!isValidString(processed[1], 30)) {
+        throw std::exception();
+      }
+      user.login(processed[1]);
+    } else if (processed.size() == 3) {
+      if (!isValidString(processed[1], 30) || !isValidString(processed[2], 30)) {
+        throw std::exception();
+      }
+      user.login(processed[1], processed[2]);
+    } else {
+      throw std::exception();
+    }
+  } else if (opt == "logout") {
+    if (current_level < 1 || processed.size() > 1) {
+      throw std::exception();
+    }
+    user.logout();
+  }
+  // else if (opt == "register") {
   //   int x = 0;
   //   int y = 10 / x;
   //   if (processed.size() != 4) {
@@ -50,6 +49,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
   //     throw std::exception();
   //   }
   //   user.regist(processed[1], processed[2], processed[3]);
+  // }
   // // } else if (opt == "passwd") {
   // //   int x = 0;
   // //   int y = 10 / x;
