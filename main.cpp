@@ -161,7 +161,11 @@ int main() {
       std::string input;
       getline(std::cin, input);
       if (std::cin.eof()) {
-        break;
+        if (!input.empty()) {
+          processLine(input, user, log, book);
+        }
+          log.exit();
+          return 0;
       }
       if (input.empty()) {
         continue;
@@ -172,6 +176,5 @@ int main() {
       std::cout << "Invalid\n";
     }
   }
-  log.exit();
-  exit(0);
+
 }
