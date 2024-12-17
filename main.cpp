@@ -13,6 +13,9 @@ void processLine(string &input, User &user, Log &log, Book &book) {
   string opt = processed[0];
   int current_level = user.getP();
   if (opt == "quit" || opt == "exit") {
+    if(processed.size()!=1) {
+      throw std::exception();
+    }
     log.exit();
     exit(0);
   }
