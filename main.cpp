@@ -198,13 +198,11 @@ int main() {
           }
     } catch (std::runtime_error &ex) {
       std::cout << "Invalid\n";
-      input.clear();
     }catch (std::exception &ex) {
       assert(false);
       std::cout << "Invalid\n";
-      input.clear();
     }
   }
-          log.exit();
-          return 0;
+  log.exit();
+  return 0;
 }
