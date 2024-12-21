@@ -134,6 +134,9 @@ double stringtoReal(const std::string &str) {
   if (stream.fail() || !stream.eof()) {
     throw std::exception();
   }
+  if(value>=1e11) {
+    throw std::exception();
+  }
   return value;
 }
 
@@ -152,10 +155,13 @@ std::vector<std::string> splitInput(const std::string &input) {
 
 int stringtoInt(const std::string &str) {
   std::istringstream stream(str);
-  int value;
+  long long value;
   stream >> value;
   if (!stream.eof()) stream >> std::ws;
   if (stream.fail() || !stream.eof()) {
+    throw std::exception();
+  }
+  if(value>2147483647) {
     throw std::exception();
   }
   return value;

@@ -100,7 +100,6 @@ void Book::import(string ISBN, int quantity) {
   full_insert(target);
 }
 
-//Todo:keyword分解没写
 //分解为三步：删除原有记录，修改为正确单元，重新插入
 void Book::modify(Book_info newinfo, string ISBN) {
   auto tmp = ISBN_storage_.find(Unit<Book_info>(ISBN.c_str()));

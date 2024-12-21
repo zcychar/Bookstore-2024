@@ -70,7 +70,11 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     if (!isValidString(processed[1], 30) || !isValidString(processed[2], 30) || processed[4].size() > 30) {
       throw std::exception();
     }
-    user.useradd(processed[1], processed[2], stringtoInt(processed[3]), processed[4]);
+    int pri=stringtoInt(processed[3]);
+    if(pri>=10||pri<0) {
+      throw std::exception();
+    }
+    user.useradd(processed[1], processed[2],stringtoInt(processed[3]), processed[4]);
   }else if (opt == "delete") {
     if (current_level < 7 || processed.size() != 2 || !isValidString(processed[1], 30)) {
       throw std::exception();
@@ -84,6 +88,10 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       if(processed.size()==2) {
         log.show(-1);
       }else if(processed.size()==3) {
+        int tmp=stringtoInt(processed[2]);
+        if(tmp<0) {
+          throw std::exception();
+        }
         log.show(stringtoInt(processed[2]));
       }else {
         throw std::exception();
@@ -129,6 +137,9 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     if(old.empty()) {
       throw std::exception();
     }
+    // if(tmp.ISBN[0]!=0||strcmp(old.c_str(),tmp.ISBN)==0) {
+    //   throw std::exception();
+    // }
     book.modify(tmp, old);
     if(tmp.ISBN[0]!=0) {
       user.deep_select(string(tmp.ISBN),old);
