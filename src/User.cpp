@@ -58,7 +58,12 @@ void User::logout() {
   }
   login_.pop_back();
   select_.pop_back();
-  level_ = login_.back().privilege;
+  if(login_.empty()) {
+    level_=0;
+  }else {
+    level_ = login_.back().privilege;
+  }
+
 }
 
 void User::regist(string userid, string password, string username) {
