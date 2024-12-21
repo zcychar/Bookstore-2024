@@ -125,7 +125,6 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     std::cout<<std::setprecision(2)<<std::fixed<<spend<<'\n';
     log.cashier(spend);
   } else if (opt == "select") {
-    assert(false);
     if (processed.size() != 2 || !isValidName(processed[1],20) || current_level < 3) {
       throw std::exception();
     }
