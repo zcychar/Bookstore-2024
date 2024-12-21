@@ -163,10 +163,10 @@ int stringtoInt(const std::string &str) {
   stream >> value;
   if (!stream.eof()) stream >> std::ws;
   if (stream.fail() || !stream.eof()) {
-    throw std::exception();
+    throw std::runtime_error("11");
   }
   if(value>2147483647) {
-    throw std::exception();
+   throw  std::runtime_error("11");
   }
   return value;
 }
