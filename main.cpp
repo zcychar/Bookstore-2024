@@ -21,7 +21,6 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     exit(0);
   }
   if (opt == "su") {
-    assert(false);
     if (processed.size() == 2) {
       if (!isValidString(processed[1], 30)) {
         throw std::exception();
@@ -76,7 +75,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       throw std::exception();
     }
     int pri=stringtoInt(processed[3]);
-    if(pri!=0&&pri!=1&&pri!=3&&pri!=7) {
+    if(pri!=1&&pri!=3&&pri!=7) {
       throw std::exception();
     }
     user.useradd(processed[1], processed[2],pri, processed[4]);
