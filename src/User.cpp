@@ -3,6 +3,10 @@
 #include <algorithm>
 
 User::User() {
+  auto tmp = storage_.find(Unit<User_info>("root"));
+  if (tmp.empty()) {
+    storage_.insert(Unit<User_info>("root",User_info("root","sjtu","root",7)));
+  }
 }
 
 int User::getP() {
@@ -66,8 +70,8 @@ void User::regist(string userid, string password, string username) {
     User_info(userid.c_str(), password.c_str(), username.c_str())));
 }
 
-void User::useradd(string userid, string password, int privilege, string username,int initial) {
-  if(privilege>=level_&&!initial) {
+void User::useradd(string userid, string password, int privilege, string username) {
+  if(privilege>=level_) {
     throw std::exception();
   }
   auto tmp = storage_.find(Unit<User_info>(userid.c_str()));

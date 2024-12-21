@@ -74,7 +74,7 @@ public:
 
   void passwd(string userid, string newpassword, string currentpassword="");
 
-  void useradd(string userid, string password, int privilege, string username,int initial=0);
+  void useradd(string userid, string password, int privilege, string username);
 
   void del(string userid);
 

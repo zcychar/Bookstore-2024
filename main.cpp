@@ -21,6 +21,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     exit(0);
   }
   if (opt == "su") {
+    assert(false);
     if (processed.size() == 2) {
       if (!isValidString(processed[1], 30)) {
         throw std::exception();
@@ -188,14 +189,8 @@ void processLine(string &input, User &user, Log &log, Book &book) {
 int main() {
   Book book;
   Log log;
-  bool flag=0;
-  if (access("user_storage_dir.txt", F_OK) != 0) {
-    flag=1;
-  }
   User user;
-  if(flag) {
-    user.useradd("root","sjtu",7,"root",1);
-  }
+
   std::string input;
   char ch;
   while (true) {
