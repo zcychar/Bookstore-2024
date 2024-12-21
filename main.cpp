@@ -139,7 +139,18 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     }
     book.import(user.getB(), stringtoInt(processed[1]));
     log.cashier(-stringtoReal(processed[2]));
-  } else {
+  } else if(opt=="log") {
+    if(processed.size()!=1||current_level<7) {
+      throw std::exception();
+    }
+  }else if(opt=="report") {
+    if(processed.size()!=2||current_level<7) {
+      throw std::exception();
+    }
+    if(processed[1]!="finance"&&processed[1]!="employee") {
+      throw std::exception();
+    }
+  }else {
     throw std::exception();
   }
 }
