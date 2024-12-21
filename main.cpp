@@ -106,6 +106,8 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       } else if (processed.size() == 2) {
         auto tmp = getInfo(processed[1]);
         book.show(tmp.first, tmp.second);
+      }else {
+        throw std::exception();
       }
     }
   } else if (opt == "buy") {
