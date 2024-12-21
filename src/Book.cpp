@@ -90,6 +90,9 @@ double Book::buy(string ISBN, int quantity) {
 }
 
 void Book::import(string ISBN, int quantity) {
+  if(ISBN=="") {
+    throw std::exception();
+  }
   auto tmp = ISBN_storage_.find(Unit<Book_info>(ISBN.c_str()));
   if (tmp.empty()) {
     throw std::exception();
