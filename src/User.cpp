@@ -23,7 +23,7 @@ void User::deep_select(string ISBN,string ISBN_old) {
 
 void User::select(const string ISBN) {
   if(select_.empty()) {
-    throw std::exception();
+    throw std::runtime_error("1");
   }
   select_.back()=ISBN;
 }
