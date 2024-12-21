@@ -31,11 +31,11 @@ void User::select(const string ISBN) {
 void User::login(string userid, string password) {
   auto tmp = storage_.find(Unit<User_info>(userid.c_str()));
   if (tmp.empty()) {
-    throw std::runtime_error("11");
+    throw std::exception();
   }
   auto target = tmp.front();
   if(!password.empty()&&strcmp(password.c_str(), target.password)!=0) {
-    throw std::runtime_error("11");
+    throw std::exception();
   }
   if (level_ > target.privilege) {
     login_.push_back(target);
@@ -49,7 +49,7 @@ void User::login(string userid, string password) {
     level_ = target.privilege;
     return;
   }
-  throw std::runtime_error("11");
+  throw std::exception();
 }
 
 void User::logout() {
@@ -93,9 +93,10 @@ void User::del(string userid) {
     throw std::exception();
   }
   auto target=tmp.front();
-  auto it=std::find(login_.begin(),login_.end(),target);
-  if(it!=login_.end()) {
-    throw std::exception();
+  for(auto it:login_) {
+    if(it.user_id==userid) {
+      throw std::exception();
+    }
   }
   storage_.del(Unit<User_info>(target.user_id,target));
 }

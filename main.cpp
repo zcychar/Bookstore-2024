@@ -128,29 +128,25 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     if (processed.size() != 2 || !isValidName(processed[1],20) || current_level < 3) {
       throw std::exception();
     }
-    user.select(processed[1]);
     book.create(processed[1]);
+    user.select(processed[1]);
   } else if (opt == "modify") {
     if (processed.size() == 1 || current_level < 3) {
+      throw std::exception();
+    }
+    auto old=user.getB();
+    if(old.empty()) {
       throw std::exception();
     }
     auto tmp = refreshInfo(processed);
     if(tmp.keyword[0]!=0) {
       parser(string(tmp.keyword));
     }
-    auto old=user.getB();
-    if(old.empty()) {
-      throw std::exception();
-    }
-    // if(tmp.ISBN[0]!=0||strcmp(old.c_str(),tmp.ISBN)==0) {
-    //   throw std::exception();
-    // }
     book.modify(tmp, old);
     if(tmp.ISBN[0]!=0) {
       user.deep_select(string(tmp.ISBN),old);
     }
   } else if (opt == "import") {
-    assert(false);
     if (processed.size() != 3 || current_level < 3) {
       throw std::exception();
     }
@@ -188,6 +184,8 @@ int main() {
           if (!input.empty()) {
             processLine(input, user, log, book);
           }
+    }catch(std::runtime_error &ex) {
+      assert(false);
     }catch (...) {
       std::cout << "Invalid\n";
     }
