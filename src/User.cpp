@@ -77,7 +77,7 @@ void User::regist(string userid, string password, string username) {
 
 void User::useradd(string userid, string password, int privilege, string username) {
   if(privilege>=level_) {
-    throw std::exception();
+    throw std::runtime_error("11");
   }
   auto tmp = storage_.find(Unit<User_info>(userid.c_str()));
   if (!tmp.empty()) {
