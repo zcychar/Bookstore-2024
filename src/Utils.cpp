@@ -145,15 +145,21 @@ double stringtoReal(const std::string &str) {
 }
 
 std::vector<std::string> splitInput(const std::string &input) {
-  std::vector<std::string> result;
-  std::istringstream iss(input);
+  std::vector<std::string> result={};
   std::string word;
-
-  // 按空格读取每个单词
-  while (iss >> word) {
+  for(const char ch:input) {
+    if(ch==' ') {
+      if(!word.empty()) {
+        result.push_back(word);
+      }
+      word.clear();
+    }else {
+      word+=ch;
+    }
+  }
+  if(!word.empty()) {
     result.push_back(word);
   }
-
   return result;
 }
 
