@@ -15,7 +15,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
   int current_level = user.getP();
   if (opt == "quit" || opt == "exit") {
     if(processed.size()!=1) {
-      throw std::exception();
+      throw std::runtime_error("11");
     }
     log.exit();
     exit(0);
@@ -23,16 +23,16 @@ void processLine(string &input, User &user, Log &log, Book &book) {
   if (opt == "su") {
     if (processed.size() == 2) {
       if (!isValidString(processed[1], 30)) {
-        throw std::exception();
+        throw std::runtime_error("11");
       }
       user.login(processed[1]);
     } else if (processed.size() == 3) {
       if (!isValidString(processed[1], 30) || !isValidString(processed[2], 30)) {
-        throw std::exception();
+        throw std::runtime_error("11");
       }
       user.login(processed[1], processed[2]);
     } else {
-      throw std::exception();
+      throw std::runtime_error("11");
     }
   } else if (opt == "logout") {
     assert(false);
@@ -213,7 +213,9 @@ int main() {
           return 0;
       }
       // std::cout<<user.getP();
-    } catch (std::exception &ex) {
+    } catch (std::runtime_error &ex) {
+      assert(false);
+    }catch (std::exception &ex) {
       std::cout << "Invalid\n";
       input.clear();
     }
