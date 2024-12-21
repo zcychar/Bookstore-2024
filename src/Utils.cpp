@@ -228,3 +228,16 @@ Book_info refreshInfo(const vector<string>& str) {
   }
   return val;
 }
+
+bool isValidName(const std::string &str, int maxmsize) {
+    if (str.size() > maxmsize) {
+      return false;
+    }
+    for (char ch : str) {
+      if (ch<32||ch>126) {
+        // 检查是否是字母、数字或下划线
+        return false;
+      }
+    }
+    return true;
+}
