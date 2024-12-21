@@ -31,7 +31,7 @@ struct User_info {
     privilege = other.privilege;
   }
 
-  User_info(const char *userid, const char *passwrd, const char *username, const int pri = 1) {
+  User_info(const char *userid, const char *passwrd, const char *username, int pri = 1) {
     memset(user_id, 0, sizeof(user_id));
     memset(user_name, 0, sizeof(user_name));
     memset(password, 0, sizeof(password));

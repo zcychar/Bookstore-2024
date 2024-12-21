@@ -35,6 +35,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       throw std::exception();
     }
   } else if (opt == "logout") {
+    assert(false);
     if (current_level < 1 || processed.size() > 1) {
       throw std::exception();
     }
@@ -77,7 +78,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     if(pri!=0&&pri!=1&&pri!=3&&pri!=7) {
       throw std::exception();
     }
-    user.useradd(processed[1], processed[2],stringtoInt(processed[3]), processed[4]);
+    user.useradd(processed[1], processed[2],pri, processed[4]);
   }else if (opt == "delete") {
     assert(false);
     if (current_level < 7 || processed.size() != 2 || !isValidString(processed[1], 30)) {
