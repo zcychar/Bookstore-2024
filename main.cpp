@@ -35,7 +35,6 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       throw std::exception();
     }
   } else if (opt == "logout") {
-    assert(false);
     if (current_level < 1 || processed.size() > 1) {
       throw std::exception();
     }
