@@ -77,7 +77,6 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     }
     user.useradd(processed[1], processed[2],pri, processed[4]);
   }else if (opt == "delete") {
-    assert(false);
     if (current_level < 7 || processed.size() != 2 || !isValidString(processed[1], 30)) {
       throw std::exception();
     }
@@ -126,7 +125,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     log.cashier(spend);
   } else if (opt == "select") {
     if (processed.size() != 2 || !isValidName(processed[1],20) || current_level < 3) {
-      throw std::exception();
+      throw std::runtime_error("1");
     }
     book.create(processed[1]);
     user.select(processed[1]);
