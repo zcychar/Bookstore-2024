@@ -248,7 +248,7 @@ bool isValidPri(const std::string &str) {
   }
   for (char ch : str) {
     if (ch<'0'||ch>'9') {
-      // 检查是否是字母、数字或下划线
+      // 检查是否是数字
       return false;
     }
   }

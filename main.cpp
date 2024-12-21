@@ -191,28 +191,11 @@ int main() {
   User user;
 
   std::string input;
-  char ch;
-  while (true) {
+  while (getline(std::cin,input)) {
     try {
-      while (std::cin.get(ch)) {
-        if (ch == '\n') {
           if (!input.empty()) {
             processLine(input, user, log, book);
           }
-          input.clear();
-        } else {
-          input.push_back(ch);
-        }
-      }
-      if (!input.empty()) {
-        processLine(input, user, log, book);
-        input.clear();
-      }
-      if (std::cin.eof()) {
-          log.exit();
-          return 0;
-      }
-      // std::cout<<user.getP();
     } catch (std::runtime_error &ex) {
       std::cout << "Invalid\n";
       input.clear();
@@ -222,5 +205,6 @@ int main() {
       input.clear();
     }
   }
-
+          log.exit();
+          return 0;
 }
