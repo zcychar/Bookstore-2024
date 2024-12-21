@@ -77,7 +77,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     }
     user.useradd(processed[1], processed[2],pri, processed[4]);
   }else if (opt == "delete") {
-    
+    assert(false);
     if (current_level < 7 || processed.size() != 2 || !isValidString(processed[1], 30)) {
       throw std::exception();
     }
