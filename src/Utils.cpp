@@ -169,10 +169,10 @@ int stringtoInt(const std::string &str) {
   stream >> value;
   if (!stream.eof()) stream >> std::ws;
   if (stream.fail() || !stream.eof()) {
-    throw std::runtime_error("11");
+    throw std::exception();
   }
   if(value>2147483647) {
-   throw  std::runtime_error("11");
+    throw std::exception();
   }
   return value;
 }

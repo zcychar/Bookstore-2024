@@ -77,11 +77,11 @@ void User::regist(string userid, string password, string username) {
 
 void User::useradd(string userid, string password, int privilege, string username) {
   if(privilege>=level_) {
-    throw std::runtime_error("11");
+    throw std::exception();
   }
   auto tmp = storage_.find(Unit<User_info>(userid.c_str()));
   if (!tmp.empty()) {
-    throw std::runtime_error("11");
+    throw std::exception();
   }
   storage_.insert(Unit<User_info>(userid.c_str(),
     User_info(userid.c_str(), password.c_str(), username.c_str(),privilege)));

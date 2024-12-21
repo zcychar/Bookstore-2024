@@ -15,7 +15,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
   int current_level = user.getP();
   if (opt == "quit" || opt == "exit") {
     if(processed.size()!=1) {
-      throw std::runtime_error("11");
+      throw std::exception();
     }
     log.exit();
     exit(0);
@@ -23,25 +23,23 @@ void processLine(string &input, User &user, Log &log, Book &book) {
   if (opt == "su") {
     if (processed.size() == 2) {
       if (!isValidString(processed[1], 30)) {
-        throw std::runtime_error("11");
+        throw std::exception();
       }
       user.login(processed[1]);
     } else if (processed.size() == 3) {
       if (!isValidString(processed[1], 30) || !isValidString(processed[2], 30)) {
-        throw std::runtime_error("11");
+        throw std::exception();
       }
       user.login(processed[1], processed[2]);
     } else {
-      throw std::runtime_error("11");
+      throw std::exception();
     }
   } else if (opt == "logout") {
-    assert(false);
     if (current_level < 1 || processed.size() > 1) {
       throw std::exception();
     }
     user.logout();
   }else if (opt == "register") {
-    assert(false);
     if (processed.size() != 4) {
       throw std::exception();
     }
@@ -50,7 +48,6 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     }
     user.regist(processed[1], processed[2], processed[3]);
   } else if (opt == "passwd") {
-    assert(false);
     if (current_level < 1) {
       throw std::exception();
     }
@@ -69,25 +66,25 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     }
   } else if (opt == "useradd") {
     if (current_level < 3 || processed.size() != 5) {
-      throw std::runtime_error("11");
+      throw std::exception();
     }
     if (!isValidString(processed[1], 30) || !isValidString(processed[2], 30) || !isValidName(processed[4],30)||!isValidPri(processed[3])) {
-      throw std::runtime_error("11");
+      throw std::exception();
     }
     int pri=stringtoInt(processed[3]);
     if(pri!=1&&pri!=3&&pri!=7) {
-      throw std::runtime_error("11");
+      throw std::exception();
     }
     user.useradd(processed[1], processed[2],pri, processed[4]);
   }else if (opt == "delete") {
-    assert(false);
+    
     if (current_level < 7 || processed.size() != 2 || !isValidString(processed[1], 30)) {
       throw std::exception();
     }
     user.del(processed[1]);
   }else if (opt == "show") {
     if (processed[1] == "finance") {
-      assert(false);
+      
       if(current_level<7) {
         throw std::exception();
       }
@@ -104,7 +101,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       }
     } else {
       //type:0-all,1-ISBN,2-name,3-author,4-keyword
-      assert(false);
+      
       if (current_level < 1) {
         throw std::exception();
       }
@@ -118,7 +115,6 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       }
     }
   } else if (opt == "buy") {
-    assert(false);
     if (processed.size() != 3 || current_level < 1 || processed[1].size() > 20) {
       throw std::exception();
     }
@@ -131,14 +127,12 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     std::cout<<std::setprecision(2)<<std::fixed<<spend<<'\n';
     log.cashier(spend);
   } else if (opt == "select") {
-    assert(false);
     if (processed.size() != 2 || processed[1].size() > 20 || current_level < 3) {
       throw std::exception();
     }
     user.select(processed[1]);
     book.create(processed[1]);
   } else if (opt == "modify") {
-    assert(false);
     if (processed.size() == 1 || current_level < 3) {
       throw std::exception();
     }
@@ -158,7 +152,6 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       user.deep_select(string(tmp.ISBN),old);
     }
   } else if (opt == "import") {
-    assert(false);
     if (processed.size() != 3 || current_level < 3) {
       throw std::exception();
     }
@@ -181,7 +174,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       throw std::exception();
     }
   }else {
-    throw std::runtime_error("11");
+    throw std::exception();
   }
 }
 
@@ -196,10 +189,7 @@ int main() {
           if (!input.empty()) {
             processLine(input, user, log, book);
           }
-    } catch (std::runtime_error &ex) {
-      std::cout << "Invalid\n";
-    }catch (std::exception &ex) {
-      assert(false);
+    }catch (...) {
       std::cout << "Invalid\n";
     }
   }
