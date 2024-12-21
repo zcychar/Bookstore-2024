@@ -1,3 +1,4 @@
+#include <cassert>
 #include <cmath>
 #include <iostream>
 #include <sstream>
@@ -82,6 +83,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     user.del(processed[1]);
   }else if (opt == "show") {
     if (processed[1] == "finance") {
+      assert(false);
       if(current_level<7) {
         throw std::exception();
       }
@@ -111,6 +113,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       }
     }
   } else if (opt == "buy") {
+    assert(false);
     if (processed.size() != 3 || current_level < 1 || processed[1].size() > 20) {
       throw std::exception();
     }
@@ -123,12 +126,14 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     std::cout<<std::setprecision(2)<<std::fixed<<spend<<'\n';
     log.cashier(spend);
   } else if (opt == "select") {
+    assert(false);
     if (processed.size() != 2 || processed[1].size() > 20 || current_level < 3) {
       throw std::exception();
     }
     user.select(processed[1]);
     book.create(processed[1]);
   } else if (opt == "modify") {
+    assert(false);
     if (processed.size() == 1 || current_level < 3) {
       throw std::exception();
     }
@@ -148,6 +153,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       user.deep_select(string(tmp.ISBN),old);
     }
   } else if (opt == "import") {
+    assert(false);
     if (processed.size() != 3 || current_level < 3) {
       throw std::exception();
     }
