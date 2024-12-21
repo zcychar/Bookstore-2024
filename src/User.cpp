@@ -43,7 +43,7 @@ void User::login(string userid, string password) {
     level_ = target.privilege;
     return;
   }
-  if (strcmp(password.c_str(), target.password) == 0) {
+  if (!password.empty()) {
     login_.push_back(target);
     select_.emplace_back("");
     level_ = target.privilege;

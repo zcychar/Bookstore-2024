@@ -71,7 +71,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     if (current_level < 3 || processed.size() != 5) {
       throw std::runtime_error("11");
     }
-    if (!isValidString(processed[1], 30) || !isValidString(processed[2], 30) || !isValidName(processed[4],30)) {
+    if (!isValidString(processed[1], 30) || !isValidString(processed[2], 30) || !isValidName(processed[4],30)||!isValidPri(processed[3])) {
       throw std::runtime_error("11");
     }
     int pri=stringtoInt(processed[3]);
