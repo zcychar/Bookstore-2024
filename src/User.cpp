@@ -81,6 +81,7 @@ void User::useradd(string userid, string password, int privilege, string usernam
   }
   auto tmp = storage_.find(Unit<User_info>(userid.c_str()));
   if (!tmp.empty()) {
+    throw std::runtime_error("11");
     throw std::exception();
   }
   storage_.insert(Unit<User_info>(userid.c_str(),
