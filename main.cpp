@@ -112,11 +112,12 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     if (processed.size() != 3 || current_level < 1 || processed[1].size() > 20) {
       throw std::exception();
     }
-    auto price = book.buy(processed[1], stringtoInt(processed[2]));
-    double spend=stringtoInt(processed[2])*1.0 * price;
-    if(stringtoInt(processed[2])==0) {
+    int quan=stringtoInt(processed[2]);
+    if(quan<=0) {
       throw std::exception();
     }
+    auto price = book.buy(processed[1], stringtoInt(processed[2]));
+    double spend=stringtoInt(processed[2])*1.0 * price;
     std::cout<<std::setprecision(2)<<std::fixed<<spend<<'\n';
     log.cashier(spend);
   } else if (opt == "select") {
@@ -148,8 +149,13 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     if (processed.size() != 3 || current_level < 3) {
       throw std::exception();
     }
-    book.import(user.getB(), stringtoInt(processed[1]));
-    log.cashier(-stringtoReal(processed[2]));
+    double total=stringtoReal(processed[2]);
+    int quan=stringtoInt(processed[1]);
+    if(total<=0||quan<=0) {
+      throw std::exception();
+    }
+    book.import(user.getB(), quan);
+    log.cashier(-total);
   } else if(opt=="log") {
     if(processed.size()!=1||current_level<7) {
       throw std::exception();
