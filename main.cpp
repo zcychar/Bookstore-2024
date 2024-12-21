@@ -67,7 +67,6 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       throw std::exception();
     }
   } else if (opt == "useradd") {
-    assert(false);
     if (current_level < 3 || processed.size() != 5) {
       throw std::exception();
     }
