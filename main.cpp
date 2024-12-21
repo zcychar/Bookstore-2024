@@ -69,14 +69,14 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     }
   } else if (opt == "useradd") {
     if (current_level < 3 || processed.size() != 5) {
-      throw std::exception();
+      throw std::runtime_error("11");
     }
     if (!isValidString(processed[1], 30) || !isValidString(processed[2], 30) || !isValidName(processed[4],30)) {
-      throw std::exception();
+      throw std::runtime_error("11");
     }
     int pri=stringtoInt(processed[3]);
     if(pri!=1&&pri!=3&&pri!=7) {
-      throw std::exception();
+      throw std::runtime_error("11");
     }
     user.useradd(processed[1], processed[2],pri, processed[4]);
   }else if (opt == "delete") {
