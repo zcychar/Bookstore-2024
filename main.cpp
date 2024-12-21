@@ -181,7 +181,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       throw std::exception();
     }
   }else {
-    throw std::exception();
+    throw std::runtime_error("11");
   }
 }
 
@@ -214,8 +214,10 @@ int main() {
       }
       // std::cout<<user.getP();
     } catch (std::runtime_error &ex) {
-      assert(false);
+      std::cout << "Invalid\n";
+      input.clear();
     }catch (std::exception &ex) {
+      assert(false);
       std::cout << "Invalid\n";
       input.clear();
     }
