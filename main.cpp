@@ -5,7 +5,7 @@
 #include "include/Log.hpp"
 #include "include/User.hpp"
 #include "include/Utils.hpp"
-
+#include <cstdio>
 
 void processLine(string &input, User &user, Log &log, Book &book) {
   auto processed = splitInput(input);
@@ -47,7 +47,6 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     }
     user.regist(processed[1], processed[2], processed[3]);
   } else if (opt == "passwd") {
-
     if (current_level < 1) {
       throw std::exception();
     }
@@ -156,24 +155,32 @@ int main() {
   if(flag) {
     user.useradd("root","sjtu",7,"root",1);
   }
+  std::string input;
+  char ch;
   while (true) {
     try {
-      std::string input;
-      getline(std::cin, input);
-      if (std::cin.eof()) {
-        if (!input.empty()) {
-          processLine(input, user, log, book);
+      while (std::cin.get(ch)) {
+        if (ch == '\n') {
+          if (!input.empty()) {
+            processLine(input, user, log, book);
+          }
+          input.clear();
+        } else {
+          input.push_back(ch);
         }
+      }
+      if (!input.empty()) {
+        processLine(input, user, log, book);
+        input.clear();
+      }
+      if (std::cin.eof()) {
           log.exit();
           return 0;
       }
-      if (input.empty()) {
-        continue;
-      }
-      processLine(input, user, log, book);
       // std::cout<<user.getP();
     } catch (std::exception &ex) {
       std::cout << "Invalid\n";
+      input.clear();
     }
   }
 
