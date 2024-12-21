@@ -84,7 +84,6 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     user.del(processed[1]);
   }else if (opt == "show") {
     if (processed[1] == "finance") {
-      assert(false);
       if(current_level<7) {
         throw std::exception();
       }
@@ -101,7 +100,6 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       }
     } else {
       //type:0-all,1-ISBN,2-name,3-author,4-keyword
-      
       if (current_level < 1) {
         throw std::exception();
       }
@@ -115,19 +113,19 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       }
     }
   } else if (opt == "buy") {
-    if (processed.size() != 3 || current_level < 1 || processed[1].size() > 20) {
+    if (processed.size() != 3 || current_level < 1 || !isValidName(processed[1],20)) {
       throw std::exception();
     }
     int quan=stringtoInt(processed[2]);
     if(quan<=0) {
       throw std::exception();
     }
-    auto price = book.buy(processed[1], stringtoInt(processed[2]));
-    double spend=stringtoInt(processed[2])*1.0 * price;
+    auto price = book.buy(processed[1], quan);
+    double spend=quan*1.0 * price;
     std::cout<<std::setprecision(2)<<std::fixed<<spend<<'\n';
     log.cashier(spend);
   } else if (opt == "select") {
-    if (processed.size() != 2 || processed[1].size() > 20 || current_level < 3) {
+    if (processed.size() != 2 || !isValidName(processed[1],20) || current_level < 3) {
       throw std::exception();
     }
     user.select(processed[1]);
