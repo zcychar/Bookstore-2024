@@ -71,7 +71,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       throw std::exception();
     }
     int pri=stringtoInt(processed[3]);
-    if(pri>=10||pri<0) {
+    if(pri!=0&&pri!=1&&pri!=3&&pri!=7) {
       throw std::exception();
     }
     user.useradd(processed[1], processed[2],stringtoInt(processed[3]), processed[4]);
