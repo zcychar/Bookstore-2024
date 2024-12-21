@@ -97,8 +97,11 @@ void User::passwd(string userid, string newpassword, string currentpassword) {
     throw std::exception();
   }
   auto target=tmp.front();
-  if(level_!=7&&strcmp(currentpassword.c_str(),target.password)!=0) {
+  if(currentpassword!=""&&strcmp(currentpassword.c_str(),target.password)!=0) {
       throw std::exception();
+  }
+  if(currentpassword==""&&level_!=7) {
+    throw std::exception();
   }
   storage_.del(Unit<User_info>(target.user_id,target));
   memset(target.password,0,sizeof(target.password));

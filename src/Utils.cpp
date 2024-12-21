@@ -60,7 +60,7 @@ std::pair<int, string> getInfo(const std::string &str) {
         throw std::exception();
       }
       string tmp = str.substr(6);
-      if(tmp.size()>20) {
+      if(tmp.size()>20||tmp.empty()) {
         throw std::exception();
       }
       return std::make_pair(1, tmp);
@@ -76,7 +76,7 @@ std::pair<int, string> getInfo(const std::string &str) {
           throw std::exception();
         }
       }
-      if(tmp.size()>60) {
+      if(tmp.size()>60||tmp.empty()) {
         throw std::exception();
       }
       return std::make_pair(2, tmp);
@@ -92,7 +92,7 @@ std::pair<int, string> getInfo(const std::string &str) {
           throw std::exception();
         }
       }
-      if(tmp.size()>60) {
+      if(tmp.size()>60||tmp.empty()) {
         throw std::exception();
       }
       return std::make_pair(3, tmp);
@@ -108,7 +108,7 @@ std::pair<int, string> getInfo(const std::string &str) {
           throw std::exception();
         }
       }
-      if(tmp.size()>60) {
+      if(tmp.size()>60||tmp.empty()) {
         throw std::exception();
       }
       return std::make_pair(4, tmp);
@@ -117,6 +117,10 @@ std::pair<int, string> getInfo(const std::string &str) {
         throw std::exception();
       }
       string tmp = str.substr(7);
+      if(tmp.empty()) {
+        throw std::exception();
+      }
+      stringtoReal(tmp);
       return std::make_pair(5, tmp);
     }
     default: {

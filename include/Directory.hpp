@@ -275,6 +275,10 @@ void Directory<T>::print_all() {
   int head = 0, tail = 0;
   dir_.get_info(tail, 3);
   dir_.get_info(head, 2);
+  if(head==0) {
+    std::cout<<'\n';
+    return;
+  }
   load_.resize(tail + 1);
   dir_.read(load_[1], 3 * sizeof(int), tail);
   for (int i = head; i; i = load_[i].next) {
