@@ -112,6 +112,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       }
     }
   } else if (opt == "buy") {
+    assert(false);
     if (processed.size() != 3 || current_level < 1 || !isValidName(processed[1],20)) {
       throw std::exception();
     }
