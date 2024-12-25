@@ -147,8 +147,10 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       user.deep_select(string(tmp.ISBN),old);
     }
   } else if (opt == "import") {
-    assert(false);
     if (processed.size() != 3 || current_level < 3) {
+      throw std::exception();
+    }
+    if(processed[2][processed[2].size()-3]!='.') {
       throw std::exception();
     }
     double total=stringtoReal(processed[2]);
