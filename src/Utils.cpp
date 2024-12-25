@@ -164,6 +164,9 @@ std::vector<std::string> splitInput(const std::string &input) {
 }
 
 int stringtoInt(const std::string &str) {
+  if(str.length()>10||str[0]=='0') {
+    throw std::exception();
+  }
   std::istringstream stream(str);
   long long value;
   stream >> value;
