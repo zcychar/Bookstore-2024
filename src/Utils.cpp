@@ -21,18 +21,23 @@ vector<string> parser(string str) {
       if (s.empty()) {
         throw std::exception();
       }
-      if (common.insert(s).second == false) {
+      if (common.count(s)) {
         throw std::exception();
       }
+      common.insert(s);
       s = "";
     } else {
       s += str[i];
     }
   }
+  if (s.empty()) {
+    throw std::exception();
+  }
   if (!s.empty()) {
-    if (common.insert(s).second == false) {
-      throw std::exception();
-    }
+      if (common.count(s)) {
+        throw std::exception();
+      }
+      common.insert(s);
   }
   for (const auto &it : common) {
     tmp.push_back(it);
