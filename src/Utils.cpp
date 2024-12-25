@@ -131,7 +131,7 @@ std::pair<int, string> getInfo(const std::string &str) {
 
 
 double stringtoReal(const std::string &str) {
-  if(str.size()>13) {
+  if(str.size()>13||str[0]=='.') {
     throw std::exception();
   }
   std::istringstream stream(str);
