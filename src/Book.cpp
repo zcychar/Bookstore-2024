@@ -174,6 +174,7 @@ void Book::show(int type, string requirement) {
       break;
     }
     default: {
+      throw std::exception();
       break;
     }
   }
