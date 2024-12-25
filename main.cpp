@@ -125,11 +125,12 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     log.cashier(spend);
   } else if (opt == "select") {
     if (processed.size() != 2 || !isValidName(processed[1],20) || current_level < 3) {
-      throw std::runtime_error("1");
+      throw std::exception();
     }
     book.create(processed[1]);
     user.select(processed[1]);
   } else if (opt == "modify") {
+    assert(false);
     if (processed.size() == 1 || current_level < 3) {
       throw std::exception();
     }

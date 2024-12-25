@@ -236,12 +236,12 @@ Book_info refreshInfo(const vector<string>& str) {
 }
 
 bool isValidName(const std::string &str, int maxmsize) {
-    if (str.size() > maxmsize) {
+    if (str.size() > maxmsize||str.empty()) {
       return false;
     }
     for (char ch : str) {
       if (ch<32||ch>126) {
-        // 检查是否是字母、数字或下划线
+        // 检查是否是不可见字符
         return false;
       }
     }
