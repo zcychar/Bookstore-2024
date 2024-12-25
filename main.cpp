@@ -40,6 +40,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     }
     user.logout();
   }else if (opt == "register") {
+    assert(false);
     if (processed.size() != 4) {
       throw std::exception();
     }
@@ -48,6 +49,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     }
     user.regist(processed[1], processed[2], processed[3]);
   } else if (opt == "passwd") {
+    assert(false);
     if (current_level < 1) {
       throw std::exception();
     }
@@ -83,7 +85,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     user.del(processed[1]);
   }else if (opt == "show") {
     if (processed[1] == "finance") {
-      assert(false);
+
       if(current_level<7) {
         throw std::exception();
       }
@@ -99,6 +101,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
         throw std::exception();
       }
     } else {
+      assert(false);
       //type:0-all,1-ISBN,2-name,3-author,4-keyword
       if (current_level < 1) {
         throw std::exception();
@@ -163,12 +166,10 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     book.import(user.getB(), quan);
     log.cashier(-total);
   } else if(opt=="log") {
-    assert(false);
     if(processed.size()!=1||current_level<7) {
       throw std::exception();
     }
   }else if(opt=="report") {
-    assert(false);
     if(processed.size()!=2||current_level<7) {
       throw std::exception();
     }
