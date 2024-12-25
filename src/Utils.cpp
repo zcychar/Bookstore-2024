@@ -56,7 +56,7 @@ bool isValidString(const std::string &str, int maxmlength) {
 std::pair<int, string> getInfo(const std::string &str) {
   switch (str[1]) {
     case 'I': {
-      if (str.substr(0, 6) != "-ISBN=") {
+      if (str.size()<=6||str.substr(0, 6) != "-ISBN=") {
         throw std::exception();
       }
       string tmp = str.substr(6);
@@ -66,7 +66,7 @@ std::pair<int, string> getInfo(const std::string &str) {
       return std::make_pair(1, tmp);
     }
     case 'n': {
-      if (str.substr(0, 7) != "-name=\"" || str[str.size() - 1] != '"') {
+      if (str.size()<=8||str.substr(0, 7) != "-name=\"" || str[str.size() - 1] != '"') {
         throw std::exception();
       }
       string tmp = str.substr(7);
@@ -82,7 +82,7 @@ std::pair<int, string> getInfo(const std::string &str) {
       return std::make_pair(2, tmp);
     }
     case 'a': {
-      if (str.substr(0, 9) != "-author=\"" || str[str.size() - 1] != '"') {
+      if (str.size()<=10||str.substr(0, 9) != "-author=\"" || str[str.size() - 1] != '"') {
         throw std::exception();
       }
       string tmp = str.substr(9);
@@ -98,7 +98,7 @@ std::pair<int, string> getInfo(const std::string &str) {
       return std::make_pair(3, tmp);
     }
     case 'k': {
-      if (str.substr(0, 10) != "-keyword=\"" || str[str.size() - 1] != '"') {
+      if (str.size()<=11||str.substr(0, 10) != "-keyword=\"" || str[str.size() - 1] != '"') {
         throw std::exception();
       }
       string tmp = str.substr(10);
@@ -131,7 +131,7 @@ std::pair<int, string> getInfo(const std::string &str) {
 
 
 double stringtoReal(const std::string &str) {
-  if(str.size()>13||str[0]=='.') {
+  if(str.size()>13||str[0]=='.'||str[str.size()-3]!='.'||str[0]=='0') {
     throw std::exception();
   }
   std::istringstream stream(str);
@@ -243,7 +243,7 @@ bool isValidName(const std::string &str, int maxmsize) {
       return false;
     }
     for (char ch : str) {
-      if (ch<32||ch>126) {
+      if (!isprint(ch)) {
         // 检查是否是不可见字符
         return false;
       }

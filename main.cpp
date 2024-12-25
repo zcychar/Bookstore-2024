@@ -99,7 +99,6 @@ void processLine(string &input, User &user, Log &log, Book &book) {
         throw std::exception();
       }
     } else {
-      assert(false);
       //type:0-all,1-ISBN,2-name,3-author,4-keyword
       if (current_level < 1) {
         throw std::exception();
