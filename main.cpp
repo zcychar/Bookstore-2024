@@ -130,7 +130,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     book.create(processed[1]);
     user.select(processed[1]);
   } else if (opt == "modify") {
-    assert(false);
+
     if (processed.size() == 1 || current_level < 3) {
       throw std::exception();
     }
@@ -147,6 +147,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
       user.deep_select(string(tmp.ISBN),old);
     }
   } else if (opt == "import") {
+    assert(false);
     if (processed.size() != 3 || current_level < 3) {
       throw std::exception();
     }
