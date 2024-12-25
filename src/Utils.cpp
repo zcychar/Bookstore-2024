@@ -131,14 +131,14 @@ std::pair<int, string> getInfo(const std::string &str) {
 
 
 double stringtoReal(const std::string &str) {
+  if(str.size()>13) {
+    throw std::exception();
+  }
   std::istringstream stream(str);
   double value;
   stream >> value;
   if (!stream.eof()) stream >> std::ws;
   if (stream.fail() || !stream.eof()) {
-    throw std::exception();
-  }
-  if(value>=1e11) {
     throw std::exception();
   }
   return value;
