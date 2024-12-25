@@ -131,7 +131,7 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     book.create(processed[1]);
     user.select(processed[1]);
   } else if (opt == "modify") {
-
+    assert(false);
     if (processed.size() == 1 || current_level < 3) {
       throw std::exception();
     }
