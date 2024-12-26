@@ -25,4 +25,8 @@ std::vector<std::string> splitInput(const std::string &input);
 
 Book_info refreshInfo(const vector<string>& str);
 
+bool isValidName(const std::string &str, int maxmsize);
+
+bool isValidPri(const std::string &str);
+
 #endif //UTILS_HPP

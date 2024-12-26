@@ -21,18 +21,23 @@ vector<string> parser(string str) {
       if (s.empty()) {
         throw std::exception();
       }
-      if (common.insert(s).second == false) {
+      if (common.count(s)) {
         throw std::exception();
       }
+      common.insert(s);
       s = "";
     } else {
       s += str[i];
     }
   }
+  if (s.empty()) {
+    throw std::exception();
+  }
   if (!s.empty()) {
-    if (common.insert(s).second == false) {
-      throw std::exception();
-    }
+      if (common.count(s)) {
+        throw std::exception();
+      }
+      common.insert(s);
   }
   for (const auto &it : common) {
     tmp.push_back(it);
@@ -56,17 +61,17 @@ bool isValidString(const std::string &str, int maxmlength) {
 std::pair<int, string> getInfo(const std::string &str) {
   switch (str[1]) {
     case 'I': {
-      if (str.substr(0, 6) != "-ISBN=") {
+      if (str.size()<=6||str.substr(0, 6) != "-ISBN=") {
         throw std::exception();
       }
       string tmp = str.substr(6);
-      if(tmp.size()>20) {
+      if(!isValidName(tmp,20)||tmp.empty()) {
         throw std::exception();
       }
       return std::make_pair(1, tmp);
     }
     case 'n': {
-      if (str.substr(0, 7) != "-name=\"" || str[str.size() - 1] != '"') {
+      if (str.size()<=8||str.substr(0, 7) != "-name=\"" || str[str.size() - 1] != '"') {
         throw std::exception();
       }
       string tmp = str.substr(7);
@@ -76,13 +81,13 @@ std::pair<int, string> getInfo(const std::string &str) {
           throw std::exception();
         }
       }
-      if(tmp.size()>60) {
+      if(!isValidName(tmp,60)||tmp.empty()) {
         throw std::exception();
       }
       return std::make_pair(2, tmp);
     }
     case 'a': {
-      if (str.substr(0, 9) != "-author=\"" || str[str.size() - 1] != '"') {
+      if (str.size()<=10||str.substr(0, 9) != "-author=\"" || str[str.size() - 1] != '"') {
         throw std::exception();
       }
       string tmp = str.substr(9);
@@ -92,13 +97,13 @@ std::pair<int, string> getInfo(const std::string &str) {
           throw std::exception();
         }
       }
-      if(tmp.size()>60) {
+      if(!isValidName(tmp,60)||tmp.empty()) {
         throw std::exception();
       }
       return std::make_pair(3, tmp);
     }
     case 'k': {
-      if (str.substr(0, 10) != "-keyword=\"" || str[str.size() - 1] != '"') {
+      if (str.size()<=11||str.substr(0, 10) != "-keyword=\"" || str[str.size() - 1] != '"') {
         throw std::exception();
       }
       string tmp = str.substr(10);
@@ -108,7 +113,7 @@ std::pair<int, string> getInfo(const std::string &str) {
           throw std::exception();
         }
       }
-      if(tmp.size()>60) {
+      if(!isValidName(tmp,60)||tmp.empty()) {
         throw std::exception();
       }
       return std::make_pair(4, tmp);
@@ -117,6 +122,10 @@ std::pair<int, string> getInfo(const std::string &str) {
         throw std::exception();
       }
       string tmp = str.substr(7);
+      if(tmp.empty()||tmp.size()>13) {
+        throw std::exception();
+      }
+      stringtoReal(tmp);
       return std::make_pair(5, tmp);
     }
     default: {
@@ -127,6 +136,9 @@ std::pair<int, string> getInfo(const std::string &str) {
 
 
 double stringtoReal(const std::string &str) {
+  if(str.size()>13||str[0]=='.'||(str.size()>1&&str[0]=='0'&&str[1]!='.')) {
+    throw std::exception();
+  }
   std::istringstream stream(str);
   double value;
   stream >> value;
@@ -138,24 +150,36 @@ double stringtoReal(const std::string &str) {
 }
 
 std::vector<std::string> splitInput(const std::string &input) {
-  std::vector<std::string> result;
-  std::istringstream iss(input);
+  std::vector<std::string> result={};
   std::string word;
-
-  // 按空格读取每个单词
-  while (iss >> word) {
+  for(const char ch:input) {
+    if(ch==' ') {
+      if(!word.empty()) {
+        result.push_back(word);
+      }
+      word.clear();
+    }else {
+      word+=ch;
+    }
+  }
+  if(!word.empty()) {
     result.push_back(word);
   }
-
   return result;
 }
 
 int stringtoInt(const std::string &str) {
+  if(str.length()>10||str[0]=='0') {
+    throw std::exception();
+  }
   std::istringstream stream(str);
-  int value;
+  long long value;
   stream >> value;
   if (!stream.eof()) stream >> std::ws;
   if (stream.fail() || !stream.eof()) {
+    throw std::exception();
+  }
+  if(value>2147483647) {
     throw std::exception();
   }
   return value;
@@ -209,6 +233,9 @@ Book_info refreshInfo(const vector<string>& str) {
          }
          changed[5]=true;
          val.price=stringtoReal(tmp.second);
+         if(val.price<0) {
+           throw std::exception();
+         }
          break;
        }
        default: {
@@ -217,4 +244,30 @@ Book_info refreshInfo(const vector<string>& str) {
      }
   }
   return val;
+}
+
+bool isValidName(const std::string &str, int maxmsize) {
+    if (str.size() > maxmsize||str.empty()) {
+      return false;
+    }
+    for (char ch : str) {
+      if (!isprint(ch)) {
+        // 检查是否是不可见字符
+        return false;
+      }
+    }
+    return true;
+}
+
+bool isValidPri(const std::string &str) {
+  if (str.size() > 1) {
+    return false;
+  }
+  for (char ch : str) {
+    if (ch<'0'||ch>'9') {
+      // 检查是否是数字
+      return false;
+    }
+  }
+  return true;
 }

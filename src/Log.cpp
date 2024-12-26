@@ -26,17 +26,17 @@ void Log::cashier(double change) {
 }
 
 void Log::show(int count) {
-  if (count == 0) {
-    std::cout << '\n';
-    return;
-  }
-  if (count == -1 || count == money_.size()) {
+  if(count==-1) {
     if (money_.empty()) {
       std::cout << "+ 0.00 - 0.00\n";
-    } else {
+    }else {
       auto tmp = money_.back();
       std::cout << std::setprecision(2) <<std::fixed<< "+ " << tmp.first << " - " << -tmp.second << '\n';
     }
+    return;
+  }
+  if (count == 0) {
+    std::cout << '\n';
     return;
   }
   if (count > money_.size()) {

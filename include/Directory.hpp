@@ -21,8 +21,8 @@ using std::vector;
 
 template <typename T>
 class Directory {
-  const int max_size_ = 1024;
-  const int limit = 1000;
+  const int max_size_ = 10240;
+  const int limit = 10000;
   int sizeofU_ = sizeof(Unit<T>);
 
   MemoryRiver<Unit<T>, 3> dir_;
@@ -275,6 +275,10 @@ void Directory<T>::print_all() {
   int head = 0, tail = 0;
   dir_.get_info(tail, 3);
   dir_.get_info(head, 2);
+  if(head==0) {
+    std::cout<<'\n';
+    return;
+  }
   load_.resize(tail + 1);
   dir_.read(load_[1], 3 * sizeof(int), tail);
   for (int i = head; i; i = load_[i].next) {

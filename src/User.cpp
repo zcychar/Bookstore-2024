@@ -3,6 +3,10 @@
 #include <algorithm>
 
 User::User() {
+  auto tmp = storage_.find(Unit<User_info>("root"));
+  if (tmp.empty()) {
+    storage_.insert(Unit<User_info>("root",User_info("root","sjtu","root",7)));
+  }
 }
 
 int User::getP() {
@@ -30,13 +34,16 @@ void User::login(string userid, string password) {
     throw std::exception();
   }
   auto target = tmp.front();
+  if(!password.empty()&&strcmp(password.c_str(), target.password)!=0) {
+    throw std::exception();
+  }
   if (level_ > target.privilege) {
     login_.push_back(target);
     select_.emplace_back("");
     level_ = target.privilege;
     return;
   }
-  if (strcmp(password.c_str(), target.password) == 0) {
+  if (!password.empty()) {
     login_.push_back(target);
     select_.emplace_back("");
     level_ = target.privilege;
@@ -51,7 +58,12 @@ void User::logout() {
   }
   login_.pop_back();
   select_.pop_back();
-  level_ = login_.back().privilege;
+  if(login_.empty()) {
+    level_=0;
+  }else {
+    level_ = login_.back().privilege;
+  }
+
 }
 
 void User::regist(string userid, string password, string username) {
@@ -63,8 +75,8 @@ void User::regist(string userid, string password, string username) {
     User_info(userid.c_str(), password.c_str(), username.c_str())));
 }
 
-void User::useradd(string userid, string password, int privilege, string username,int initial) {
-  if(privilege>=level_&&!initial) {
+void User::useradd(string userid, string password, int privilege, string username) {
+  if(privilege>=level_) {
     throw std::exception();
   }
   auto tmp = storage_.find(Unit<User_info>(userid.c_str()));
@@ -81,9 +93,10 @@ void User::del(string userid) {
     throw std::exception();
   }
   auto target=tmp.front();
-  auto it=std::find(login_.begin(),login_.end(),target);
-  if(it!=login_.end()) {
-    throw std::exception();
+  for(auto it:login_) {
+    if(it.user_id==userid) {
+      throw std::exception();
+    }
   }
   storage_.del(Unit<User_info>(target.user_id,target));
 }
@@ -94,8 +107,11 @@ void User::passwd(string userid, string newpassword, string currentpassword) {
     throw std::exception();
   }
   auto target=tmp.front();
-  if(level_!=7&&strcmp(currentpassword.c_str(),target.password)!=0) {
+  if(currentpassword!=""&&strcmp(currentpassword.c_str(),target.password)!=0) {
       throw std::exception();
+  }
+  if(currentpassword==""&&level_!=7) {
+    throw std::exception();
   }
   storage_.del(Unit<User_info>(target.user_id,target));
   memset(target.password,0,sizeof(target.password));
