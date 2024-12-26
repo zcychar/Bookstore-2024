@@ -131,7 +131,6 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     book.create(processed[1]);
     user.select(processed[1]);
   } else if (opt == "modify") {
-    assert(false);
     if (processed.size() == 1 || current_level < 3) {
       throw std::exception();
     }
@@ -149,9 +148,6 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     }
   } else if (opt == "import") {
     if (processed.size() != 3 || current_level < 3) {
-      throw std::exception();
-    }
-    if(processed[2][processed[2].size()-3]!='.') {
       throw std::exception();
     }
     double total=stringtoReal(processed[2]);
