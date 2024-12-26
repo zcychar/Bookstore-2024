@@ -233,6 +233,9 @@ Book_info refreshInfo(const vector<string>& str) {
          }
          changed[5]=true;
          val.price=stringtoReal(tmp.second);
+         if(val.price<0) {
+           throw std::exception();
+         }
          break;
        }
        default: {
