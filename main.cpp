@@ -184,8 +184,6 @@ int main() {
           if (!input.empty()) {
             processLine(input, user, log, book);
           }
-    }catch(std::runtime_error &ex) {
-      assert(false);
     }catch (...) {
       std::cout << "Invalid\n";
     }
