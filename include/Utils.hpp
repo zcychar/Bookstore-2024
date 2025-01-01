@@ -15,7 +15,7 @@ vector<string> parser(string str);
 
 bool isValidString(const std::string &str, int maxmsize);
 
-std::pair<int,string> getInfo(const std::string& str);
+std::pair<int, string> getInfo(const std::string &str);
 
 double stringtoReal(const std::string &str);
 
@@ -23,7 +23,7 @@ int stringtoInt(const std::string &str);
 
 std::vector<std::string> splitInput(const std::string &input);
 
-Book_info refreshInfo(const vector<string>& str);
+Book_info refreshInfo(const vector<string> &str);
 
 bool isValidName(const std::string &str, int maxmsize);
 

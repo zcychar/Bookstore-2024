@@ -48,7 +48,6 @@ void Book::copy(Book_info &target, Book_info &newinfo) {
 }
 
 void Book::full_insert(Book_info &target) {
-
   ISBN_storage_.insert(Unit<Book_info>(target.ISBN, target));
   if (target.bookname[0] != 0) {
     name_storage_.insert(Unit<Book_info>(target.bookname, target));
@@ -68,9 +67,9 @@ void Book::create(string ISBN) {
   auto tmp = ISBN_storage_.find(Unit<Book_info>(ISBN.c_str()));
   if (tmp.empty()) {
     Book_info val;
-    memset(val.ISBN,0,sizeof(val.ISBN));
-    strcpy(val.ISBN,ISBN.c_str());
-    ISBN_storage_.insert(Unit<Book_info>(ISBN.c_str(),val));
+    memset(val.ISBN, 0, sizeof(val.ISBN));
+    strcpy(val.ISBN, ISBN.c_str());
+    ISBN_storage_.insert(Unit<Book_info>(ISBN.c_str(), val));
   }
 }
 
@@ -90,7 +89,7 @@ double Book::buy(string ISBN, int quantity) {
 }
 
 void Book::import(string ISBN, int quantity) {
-  if(ISBN=="") {
+  if (ISBN == "") {
     throw std::exception();
   }
   auto tmp = ISBN_storage_.find(Unit<Book_info>(ISBN.c_str()));
@@ -109,7 +108,7 @@ void Book::modify(Book_info newinfo, string ISBN) {
   if (tmp.empty()) {
     throw std::exception();
   }
-  if(newinfo.ISBN[0]!=0) {
+  if (newinfo.ISBN[0] != 0) {
     auto safetycheck = ISBN_storage_.find(Unit<Book_info>(newinfo.ISBN));
     if (!safetycheck.empty()) {
       throw std::exception();
@@ -132,7 +131,7 @@ void Book::show(int type, string requirement) {
       if (tmp.empty()) {
         std::cout << "\n";
       } else {
-        std::cout << tmp.front()<<'\n';
+        std::cout << tmp.front() << '\n';
       }
       break;
     }
@@ -142,7 +141,7 @@ void Book::show(int type, string requirement) {
         std::cout << "\n";
       } else {
         for (const auto &it : tmp) {
-          std::cout << it<<'\n';
+          std::cout << it << '\n';
         }
       }
       break;
@@ -153,7 +152,7 @@ void Book::show(int type, string requirement) {
         std::cout << "\n";
       } else {
         for (const auto &it : tmp) {
-          std::cout << it<<'\n';
+          std::cout << it << '\n';
         }
       }
       break;
@@ -168,14 +167,13 @@ void Book::show(int type, string requirement) {
         std::cout << "\n";
       } else {
         for (const auto &it : tmp) {
-          std::cout << it <<'\n';
+          std::cout << it << '\n';
         }
       }
       break;
     }
     default: {
       throw std::exception();
-      break;
     }
   }
 }

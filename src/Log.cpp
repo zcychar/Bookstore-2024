@@ -26,12 +26,12 @@ void Log::cashier(double change) {
 }
 
 void Log::show(int count) {
-  if(count==-1) {
+  if (count == -1) {
     if (money_.empty()) {
       std::cout << "+ 0.00 - 0.00\n";
-    }else {
+    } else {
       auto tmp = money_.back();
-      std::cout << std::setprecision(2) <<std::fixed<< "+ " << tmp.first << " - " << -tmp.second << '\n';
+      std::cout << std::setprecision(2) << std::fixed << "+ " << tmp.first << " - " << -tmp.second << '\n';
     }
     return;
   }
@@ -43,5 +43,6 @@ void Log::show(int count) {
     throw std::exception();
   }
   auto tmp2 = money_.back(), tmp1 = money_[money_.size() - 1 - count];
-  std::cout << std::setprecision(2) <<std::fixed<< "+ " << tmp2.first - tmp1.first << " - " << -tmp2.second + tmp1.second << '\n';
+  std::cout << std::setprecision(2) << std::fixed << "+ " << tmp2.first - tmp1.first << " - " << -tmp2.second + tmp1.
+      second << '\n';
 }

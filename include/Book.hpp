@@ -34,7 +34,7 @@ struct Book_info {
 
   friend std::ostream &operator<<(std::ostream &os, const Book_info &that) {
     os << that.ISBN << '\t' << that.bookname << '\t' << that.author << '\t' << that.keyword << '\t' <<
-        std::setprecision(2) <<std::fixed<< that.price <<
+        std::setprecision(2) << std::fixed << that.price <<
         '\t' << that.quantity;
     return os;
   }

@@ -30,6 +30,7 @@ class Directory {
 
   vector<Unit<T> > load_;
   vector<Unit<T> > cur_;
+
   // 安全读入dir_
   int load_dir();
 
@@ -51,17 +52,21 @@ class Directory {
   // 删除单个节点，废弃对应块
   void delete_u(int place);
 
- public:
+public:
   explicit Directory(string file_name, int debug = 0);
+
   //修改cur_,load_ 必须输出
   void insert(Unit<T> id);
+
   //查找并按键从小到大输出
   vector<T> find(Unit<T> id);
+
   //单点删除
   void del(Unit<T> id);
 
   void print_all();
 };
+
 template <typename T>
 int Directory<T>::load_dir() {
   int tail = 0;
@@ -275,8 +280,8 @@ void Directory<T>::print_all() {
   int head = 0, tail = 0;
   dir_.get_info(tail, 3);
   dir_.get_info(head, 2);
-  if(head==0) {
-    std::cout<<'\n';
+  if (head == 0) {
+    std::cout << '\n';
     return;
   }
   load_.resize(tail + 1);
@@ -289,7 +294,6 @@ void Directory<T>::print_all() {
     }
   }
 }
-
 
 
 #endif //DIRECTORY_HPP

@@ -10,18 +10,19 @@ using std::ifstream;
 using std::ofstream;
 using std::string;
 
-template <class T, int info_len = 2>
+template <class T,int info_len = 2>
 class MemoryRiver {
- private:
+private:
   /* your code here */
   fstream file;
   string file_name;
   int sizeofT = sizeof(T);
 
- public:
+public:
   MemoryRiver() = default;
 
-  MemoryRiver(const string &file_name) : file_name(file_name) {}
+  MemoryRiver(const string &file_name) : file_name(file_name) {
+  }
 
   void initialise(string FN = "");
 
@@ -37,16 +38,16 @@ class MemoryRiver {
   int write(T &t, int size = 1);
 
   // 用t的值更新位置索引index对应的对象，保证调用的index都是由write函数产生
-  void update(T &t, const int index,int size=1);
+  void update(T &t, const int index, int size = 1);
 
   //读出位置索引index对应的T对象的值并赋值给t，保证调用的index都是由write函数产生
-  void read(T &t, const int index,int size=1);
+  void read(T &t, const int index, int size = 1);
 
   //删除位置索引index对应的对象(不涉及空间回收时，可忽略此函数)，保证调用的index都是由write函数产生
   void Delete(int index);
 };
 
-template <class T, int info_len>
+template <class T,int info_len>
 void MemoryRiver<T, info_len>::initialise(string FN) {
   if (FN != "") file_name = FN;
   if (access(file_name.c_str(), F_OK) == 0) {
@@ -58,7 +59,7 @@ void MemoryRiver<T, info_len>::initialise(string FN) {
   file.close();
 }
 
-template <class T, int info_len>
+template <class T,int info_len>
 void MemoryRiver<T, info_len>::get_info(int &tmp, int n) {
   if (n > info_len) return;
   file.open(file_name);
@@ -67,7 +68,7 @@ void MemoryRiver<T, info_len>::get_info(int &tmp, int n) {
   file.close();
 }
 
-template <class T, int info_len>
+template <class T,int info_len>
 void MemoryRiver<T, info_len>::write_info(int tmp, int n) {
   if (n > info_len) return;
   file.open(file_name);
@@ -76,7 +77,7 @@ void MemoryRiver<T, info_len>::write_info(int tmp, int n) {
   file.close();
 }
 
-template <class T, int info_len>
+template <class T,int info_len>
 int MemoryRiver<T, info_len>::write(T &t, int size) {
   file.open(file_name, std::ios::app);
   int index = file.tellp();
@@ -85,7 +86,7 @@ int MemoryRiver<T, info_len>::write(T &t, int size) {
   return index;
 }
 
-template <class T, int info_len>
+template <class T,int info_len>
 void MemoryRiver<T, info_len>::update(T &t, const int index, int size) {
   file.open(file_name);
   file.seekp(index);
@@ -93,7 +94,7 @@ void MemoryRiver<T, info_len>::update(T &t, const int index, int size) {
   file.close();
 }
 
-template <class T, int info_len>
+template <class T,int info_len>
 void MemoryRiver<T, info_len>::read(T &t, const int index, int size) {
   file.open(file_name);
   file.seekg(index);

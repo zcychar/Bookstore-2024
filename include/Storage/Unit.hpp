@@ -11,11 +11,11 @@ using std::vector;
 
 template <typename T>
 struct Unit {
-  T value = {};         // 值
-  int pos = 0;          // body_文件中头元素位置
-  int next = 0;         // 头链表中下一个位置
-  int size = 0;         // 作为头结点时 块大小
-  char index[80] = {};  // 键
+  T value = {}; // 值
+  int pos = 0; // body_文件中头元素位置
+  int next = 0; // 头链表中下一个位置
+  int size = 0; // 作为头结点时 块大小
+  char index[80] = {}; // 键
 
   Unit() = default;
 
@@ -35,6 +35,7 @@ struct Unit {
 
   bool operator!=(const Unit &other) const;
 };
+
 template <typename T>
 Unit<T>::Unit(const char *str) {
   memset(index, 0, sizeof(index));

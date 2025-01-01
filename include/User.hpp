@@ -21,7 +21,7 @@ struct User_info {
 
   User_info() = default;
 
-  User_info(const User_info& other) {
+  User_info(const User_info &other) {
     memset(user_id, 0, sizeof(user_id));
     memset(user_name, 0, sizeof(user_name));
     memset(password, 0, sizeof(password));
@@ -44,23 +44,22 @@ struct User_info {
   bool operator<(const User_info &other) const { return (strcmp(user_id, other.user_id) == -1); }
 
   bool operator==(const User_info &other) const {
-    return (strcmp(user_id, other.user_id) == 0) && (strcmp(password, other.password)==0);
+    return (strcmp(user_id, other.user_id) == 0) && (strcmp(password, other.password) == 0);
   }
 
   bool operator>(const User_info &other) const { return operator<(other) ^ 1; }
 };
 
 class User {
-  Directory<User_info> storage_ =Directory<User_info>("user_storage");
+  Directory<User_info> storage_ = Directory<User_info>("user_storage");
   vector<User_info> login_ = {};
-  vector<string>select_={};
+  vector<string> select_ = {};
   int level_ = 0;
-
 
 public:
   User();
 
- void deep_select(string ISBN,string ISBN_old);
+  void deep_select(string ISBN, string ISBN_old);
 
   int getP();
 
@@ -72,7 +71,7 @@ public:
 
   void regist(string userid, string password, string username);
 
-  void passwd(string userid, string newpassword, string currentpassword="");
+  void passwd(string userid, string newpassword, string currentpassword = "");
 
   void useradd(string userid, string password, int privilege, string username);
 
