@@ -78,6 +78,8 @@ public:
   void del(string userid);
 
   string getB();
+
+  string getName();
 };
 
 #endif  // USER_HPP

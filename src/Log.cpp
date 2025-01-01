@@ -25,6 +25,7 @@ void Log::cashier(double change) {
   money_.emplace_back(tmp.first, tmp.second + change);
 }
 
+
 void Log::show(int count) {
   if (count == -1) {
     if (money_.empty()) {
@@ -46,3 +47,36 @@ void Log::show(int count) {
   std::cout << std::setprecision(2) << std::fixed << "+ " << tmp2.first - tmp1.first << " - " << -tmp2.second + tmp1.
       second << '\n';
 }
+
+void Log::print_finance() {
+  std::cout<<"------------------财务报表-----------------\n";
+  std::cout << "|----编号----|----总收入----|----总支出----|\n";
+  for (int i = 0; i < money_.size(); ++i) {
+    std::cout<<"|";
+    std::cout<<std::setfill('-');
+    std::cout <<std::right<<std::setw(6)<< i + 1<<"-----|";
+    std::cout<<std::setw(10)<<std::setfill('-')<<std::right<< std::setprecision(2) << std::fixed << money_[i].first<<"---|";
+    std::cout<<std::setw(10)<<std::setfill('-')<<std::right<< std::setprecision(2) << std::fixed<<money_[i].second <<"---|"<< '\n';
+  }
+  std::cout<<std::setfill(' ');
+}
+
+void Log::print_employee() {
+  std::cout<<"--------------------------------------员工报表--------------------------------------\n";
+  std::cout<<"id\t\t\t\t\t操作\t\t\t\n";
+  for(int i=0;i<log_.size();++i) {
+    std::cout<<log_[i].c<<'\n';
+  }
+}
+
+void Log::print_all() {
+  print_employee();
+  print_finance();
+}
+
+void Log::insert_operation(string name, string opt) {
+  log_.emplace_back(statement(name,opt));
+}
+
+
+

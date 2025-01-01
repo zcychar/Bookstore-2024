@@ -160,12 +160,19 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     if (processed.size() != 1 || current_level < 7) {
       throw std::exception();
     }
+    log.print_all();
   } else if (opt == "report") {
     if (processed.size() != 2 || current_level < 7) {
       throw std::exception();
     }
     if (processed[1] != "finance" && processed[1] != "employee") {
       throw std::exception();
+    }
+    if(processed[1]=="finance") {
+      log.print_finance();
+    }
+    if(processed[1]=="employee") {
+      log.print_employee();
     }
   } else {
     throw std::exception();
@@ -182,6 +189,7 @@ int main() {
     try {
       if (!input.empty()) {
         processLine(input, user, log, book);
+        log.insert_operation(user.getName(),input);
       }
     } catch (...) {
       std::cout << "Invalid\n";

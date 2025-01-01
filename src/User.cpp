@@ -121,3 +121,10 @@ void User::passwd(string userid, string newpassword, string currentpassword) {
 string User::getB() {
   return select_.back();
 }
+
+string User::getName() {
+  if(login_.empty()) {
+    return "Tourist";
+  }
+  return string(login_.back().user_id);
+}

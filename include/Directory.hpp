@@ -65,6 +65,8 @@ public:
   void del(Unit<T> id);
 
   void print_all();
+
+  vector<Unit<T>> get_all();
 };
 
 template <typename T>
@@ -295,5 +297,24 @@ void Directory<T>::print_all() {
   }
 }
 
-
+template <typename T>
+vector<Unit<T>> Directory<T>::get_all() {
+  int head = 0, tail = 0;
+  dir_.get_info(tail, 3);
+  dir_.get_info(head, 2);
+  vector<Unit<T>> tmp;
+  if (head == 0) {
+    return tmp;
+  }
+  load_.resize(tail + 1);
+  dir_.read(load_[1], 3 * sizeof(int), tail);
+  for (int i = head; i; i = load_[i].next) {
+    cur_.resize(load_[i].size + 1);
+    body_.read(cur_[1], load_[i].pos, load_[i].size);
+    for (int j = 1; j <= load_[i].size; ++j) {
+      tmp.emplace_back(cur_[j]);
+    }
+  }
+  return tmp;
+}
 #endif //DIRECTORY_HPP
