@@ -66,7 +66,7 @@ public:
 
   void print_all();
 
-  vector<Unit<T>> get_all();
+  vector<Unit<T> > get_all();
 };
 
 template <typename T>
@@ -298,11 +298,11 @@ void Directory<T>::print_all() {
 }
 
 template <typename T>
-vector<Unit<T>> Directory<T>::get_all() {
+vector<Unit<T> > Directory<T>::get_all() {
   int head = 0, tail = 0;
   dir_.get_info(tail, 3);
   dir_.get_info(head, 2);
-  vector<Unit<T>> tmp;
+  vector<Unit<T> > tmp;
   if (head == 0) {
     return tmp;
   }

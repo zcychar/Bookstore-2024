@@ -168,10 +168,10 @@ void processLine(string &input, User &user, Log &log, Book &book) {
     if (processed[1] != "finance" && processed[1] != "employee") {
       throw std::exception();
     }
-    if(processed[1]=="finance") {
+    if (processed[1] == "finance") {
       log.print_finance();
     }
-    if(processed[1]=="employee") {
+    if (processed[1] == "employee") {
       log.print_employee();
     }
   } else {
@@ -189,7 +189,7 @@ int main() {
     try {
       if (!input.empty()) {
         processLine(input, user, log, book);
-        log.insert_operation(user.getName(),input);
+        log.insert_operation(user.getName(), input);
       }
     } catch (...) {
       std::cout << "Invalid\n";

@@ -123,7 +123,7 @@ string User::getB() {
 }
 
 string User::getName() {
-  if(login_.empty()) {
+  if (login_.empty()) {
     return "Tourist";
   }
   return string(login_.back().user_id);

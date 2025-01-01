@@ -5,21 +5,24 @@
 
 struct statement {
   char c[400]{};
-  statement(string name,string opt) {
-    auto tmp=name+"\t\t\t\t"+opt;
-    memset(c,0,sizeof(c));
-    memcpy(c,tmp.c_str(),sizeof(c));
+
+  statement(string name, string opt) {
+    auto tmp = name + "\t\t\t\t" + opt;
+    memset(c, 0, sizeof(c));
+    memcpy(c, tmp.c_str(), sizeof(c));
   }
-  statement()=default;
+
+  statement() = default;
 };
 
 class Log {
   vector<std::pair<double, double> > money_;
   MemoryRiver<std::pair<double, double>, 1> storage_;
   MemoryRiver<statement> log_storage_;
-  vector<statement>log_;
+  vector<statement> log_;
+
 public:
-  Log(){
+  Log() {
     storage_.initialise("finance.txt");
     int len = 0;
     storage_.get_info(len, 1);
@@ -51,7 +54,7 @@ public:
 
   void print_employee();
 
-  void insert_operation(string name,string operation);
+  void insert_operation(string name, string operation);
 };
 
 

@@ -49,23 +49,25 @@ void Log::show(int count) {
 }
 
 void Log::print_finance() {
-  std::cout<<"------------------财务报表-----------------\n";
+  std::cout << "------------------财务报表-----------------\n";
   std::cout << "|----编号----|----总收入----|----总支出----|\n";
   for (int i = 0; i < money_.size(); ++i) {
-    std::cout<<"|";
-    std::cout<<std::setfill('-');
-    std::cout <<std::right<<std::setw(6)<< i + 1<<"-----|";
-    std::cout<<std::setw(10)<<std::setfill('-')<<std::right<< std::setprecision(2) << std::fixed << money_[i].first<<"---|";
-    std::cout<<std::setw(10)<<std::setfill('-')<<std::right<< std::setprecision(2) << std::fixed<<money_[i].second <<"---|"<< '\n';
+    std::cout << "|";
+    std::cout << std::setfill('-');
+    std::cout << std::right << std::setw(6) << i + 1 << "-----|";
+    std::cout << std::setw(10) << std::setfill('-') << std::right << std::setprecision(2) << std::fixed << money_[i].
+        first << "---|";
+    std::cout << std::setw(10) << std::setfill('-') << std::right << std::setprecision(2) << std::fixed << money_[i].
+        second << "---|" << '\n';
   }
-  std::cout<<std::setfill(' ');
+  std::cout << std::setfill(' ');
 }
 
 void Log::print_employee() {
-  std::cout<<"--------------------------------------员工报表--------------------------------------\n";
-  std::cout<<"id\t\t\t\t\t操作\t\t\t\n";
-  for(int i=0;i<log_.size();++i) {
-    std::cout<<log_[i].c<<'\n';
+  std::cout << "--------------------------------------员工报表--------------------------------------\n";
+  std::cout << "id\t\t\t\t\t操作\t\t\t\n";
+  for (int i = 0; i < log_.size(); ++i) {
+    std::cout << log_[i].c << '\n';
   }
 }
 
@@ -75,8 +77,5 @@ void Log::print_all() {
 }
 
 void Log::insert_operation(string name, string opt) {
-  log_.emplace_back(statement(name,opt));
+  log_.emplace_back(statement(name, opt));
 }
-
-
-
